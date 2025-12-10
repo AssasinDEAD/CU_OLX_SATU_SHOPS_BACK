@@ -1,2 +1,18 @@
-node_modules
+# зависимости
+node_modules/
+
+# окружение
 .env
+.env.local
+
+# логи
+*.log
+logs/
+
+# сборка
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/

@@ -13,6 +13,10 @@ export const pool = new Pool({
   idleTimeoutMillis: 30000,
 })
 
+pool.on('error', (err) => {
+  console.error('Unexpected PG pool error', err)
+})
+
 export async function getClient() {
   return pool.connect()
 }
