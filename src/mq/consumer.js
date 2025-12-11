@@ -8,7 +8,6 @@ import { isKeyUsed, recordKey } from "../repositories/idempotency.repo.js";
 export async function startTaskConsumer() {
   const { channel } = await connectToRabbit();
 
-  // очередь для ретраев (10 минут)
   await channel.assertQueue("tasks_retry_10m", {
     durable: true,
     arguments: {
@@ -18,7 +17,6 @@ export async function startTaskConsumer() {
     }
   });
 
-  // основная очередь
   await channel.assertQueue(QUEUES.TASKS, {
     durable: true,
     arguments: {
@@ -27,7 +25,6 @@ export async function startTaskConsumer() {
     }
   });
 
-  // финальный DLQ
   await channel.assertQueue("tasks_dead_final", { durable: true });
 
   channel.prefetch(1);
